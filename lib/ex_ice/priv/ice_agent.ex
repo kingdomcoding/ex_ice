@@ -925,6 +925,7 @@ defmodule ExICE.Priv.ICEAgent do
       |> Map.new(fn local_cand ->
         pair_state = get_pair_state(local_cand, remote_cand, checklist_foundations)
         pair = CandidatePair.new(local_cand, remote_cand, ice_agent.role, pair_state)
+        |> IO.inspect(label: "do_add_remote_candidate CandidatePair.new")
         {pair.id, pair}
       end)
 
@@ -1191,6 +1192,7 @@ defmodule ExICE.Priv.ICEAgent do
       for remote_cand <- remote_cands, into: %{} do
         pair_state = get_pair_state(relay_cand, remote_cand, checklist_foundations)
         pair = CandidatePair.new(relay_cand, remote_cand, ice_agent.role, pair_state)
+        |> IO.inspect(label: "add_relay_cand CandidatePair.new")
         {pair.id, pair}
       end
 
@@ -1314,6 +1316,8 @@ defmodule ExICE.Priv.ICEAgent do
 
       pair =
         CandidatePair.new(local_cand, remote_cand, ice_agent.role, :waiting, last_seen: now())
+        |> IO.inspect(label: "handle_binding_request CandidatePair.new")
+
 
       @conn_check_handler[ice_agent.role].handle_conn_check_request(
         ice_agent,
@@ -1507,6 +1511,7 @@ defmodule ExICE.Priv.ICEAgent do
 
       valid_pair =
         CandidatePair.new(local_cand, remote_cand, ice_agent.role, :succeeded, valid?: true)
+        |> IO.inspect(label: "handle_conn_check_success_response CandidatePair.new")
 
       checklist_pair = Checklist.find_pair(ice_agent.checklist, valid_pair)
 

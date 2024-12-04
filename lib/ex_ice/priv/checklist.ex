@@ -24,7 +24,7 @@ defmodule ExICE.Priv.Checklist do
 
   @spec get_valid_pair(t()) :: CandidatePair.t() | nil
   def get_valid_pair(checklist) do
-    IO.inspect(checklist, label: "ice_agent.checklist")
+    # IO.inspect(checklist, label: "ice_agent.checklist")
     checklist
     |> Stream.map(fn {_id, pair} -> pair end)
     |> Stream.filter(fn pair -> pair.valid? end)

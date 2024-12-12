@@ -1511,7 +1511,7 @@ defmodule ExICE.Priv.ICEAgent do
 
       valid_pair =
         CandidatePair.new(local_cand, remote_cand, ice_agent.role, :succeeded, valid?: true)
-        # |> IO.inspect(label: "handle_conn_check_success_response CandidatePair.new")
+        |> IO.inspect(label: "handle_conn_check_success_response CandidatePair.new")
 
       checklist_pair = Checklist.find_pair(ice_agent.checklist, valid_pair)
 

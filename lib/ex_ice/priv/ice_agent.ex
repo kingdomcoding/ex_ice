@@ -2501,7 +2501,17 @@ defmodule ExICE.Priv.ICEAgent do
 
     dst = {remote_cand.address, remote_cand.port}
 
-    case do_send(ice_agent, local_cand, dst, raw_req) do
+    pair
+    |> IO.inspect(label: "Pair")
+
+
+    {ice_agent, local_cand, dst, raw_req}
+    |> IO.inspect(label: "Do Send Params: {ice_agent, local_cand, dst, raw_req}")
+
+
+    do_send(ice_agent, local_cand, dst, raw_req)
+    |> IO.inspect(label: "Do Send Result")
+    |> case do
       {:ok, ice_agent} ->
         Process.send_after(self(), {:tr_rtx_timeout, req.transaction_id}, @tr_rtx_timeout)
 

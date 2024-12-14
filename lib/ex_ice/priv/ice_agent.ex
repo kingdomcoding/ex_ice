@@ -760,7 +760,8 @@ defmodule ExICE.Priv.ICEAgent do
             Logger.debug("""
             Couldn't find host candidate for #{inspect(src_ip)}:#{src_port}. \
             Ignoring incoming STUN message.\
-handle_stun_message
+            """)
+
             ice_agent
 
           host_cand ->
@@ -1472,8 +1473,6 @@ handle_stun_message
 
   ## BINDING RESPONSE HANDLING ##
   defp handle_conn_check_response(ice_agent, local_cand, src_ip, src_port, msg) do
-    IO.inspect({ice_agent, local_cand, src_ip, src_port}, label: "{ice_agent, local_cand, src_ip, src_port}")
-    IO.inspect(msg, label: "msg")
     {%{pair_id: pair_id}, conn_checks} = Map.pop!(ice_agent.conn_checks, msg.transaction_id)
     ice_agent = %__MODULE__{ice_agent | conn_checks: conn_checks}
     conn_check_pair = Map.fetch!(ice_agent.checklist, pair_id)

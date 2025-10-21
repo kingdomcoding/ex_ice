@@ -101,7 +101,7 @@ defmodule ExICE.Priv.Gatherer do
     ret =
       stun_server.host
       |> then(&String.to_charlist(&1))
-      |> :inet.gethostbyname()
+      |> :inet.gethostbyname() # BINGO!
 
     Logger.debug("MY-DEBUG STUN Server ret: #{inspect(ret)}")
 
@@ -111,7 +111,11 @@ defmodule ExICE.Priv.Gatherer do
         ip = List.first(ips)
         port = stun_server.port
 
-        {:ok, {sock_ip, _sock_port}} = gatherer.transport_module.sockname(socket)
+        {:ok, {sock_ip, _sock_port}} = gatherer.transport_module.sockname(socket) # BINGO?
+
+        Logger.debug("MY-DEBUG Socket Transport module: #{inspect(gatherer.transport_module)}")
+        Logger.debug("MY-DEBUG Socket: #{inspect(socket)}")
+        Logger.debug("MY-DEBUG Socket IP: #{inspect(sock_ip)}")
 
         cand_family = Utils.family(sock_ip)
         stun_family = Utils.family(ip)

@@ -96,13 +96,18 @@ defmodule ExICE.Priv.Gatherer do
       Message.new(t_id, %Type{class: :request, method: :binding}, [])
       |> Message.encode()
 
+    Logger.debug("MY-DEBUG STUN Server: #{inspect(stun_server)}")
+
     ret =
       stun_server.host
       |> then(&String.to_charlist(&1))
       |> :inet.gethostbyname()
 
+    Logger.debug("MY-DEBUG STUN Server ret: #{inspect(ret)}")
+
     case ret do
       {:ok, {:hostent, _, _, _, _, ips}} ->
+        Logger.debug("MY-DEBUG STUN Server ips: #{inspect(ips)}")
         ip = List.first(ips)
         port = stun_server.port
 
